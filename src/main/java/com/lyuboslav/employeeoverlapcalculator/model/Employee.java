@@ -17,4 +17,20 @@ public class Employee {
 	private LocalDate dateFrom;
 	@CsvCustomBindByPosition(position = 3, converter = LocalDateParser.class)
 	private LocalDate dateTo;
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public LocalDate getDateFrom() {
+		return dateFrom;
+	}
+
+	public LocalDate getDateTo() {
+		return dateTo;
+	}
 }
