@@ -7,6 +7,7 @@ import com.lyuboslav.employeeoverlapcalculator.parse.ParseUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -39,12 +40,15 @@ public class Main {
 		List<Employee> employees = ParseUtils.parseCsv(fileName);
 		Map<Integer, Project> projects = calculator.getProjects(employees);
 		projects.values().forEach(project -> {
-			List<Overlap> overlaps = calculator.getLongestOverlapsForProject(project);
-			if (!overlaps.isEmpty()) {
-				System.out.println("Project ID: " + project.getProjectId());
-				overlaps.forEach(System.out::println);
+			Optional<List<Overlap>> overlapsResult = calculator.getLongestOverlapsForProject(project);
+
+			if (overlapsResult.isEmpty()) {
+				System.out.println("Overlap impossible. Less than 2 employees found in project ID: " + project.getProjectId());
+			} else if (overlapsResult.get().isEmpty()) {
+				System.out.println("No overlaps found in project ID: " + project.getProjectId());
 			} else {
-				System.out.println("No overlaps found for project ID: " + project.getProjectId());
+				System.out.println("Project ID: " + project.getProjectId());
+				overlapsResult.get().forEach(System.out::println);
 			}
 		});
 	}

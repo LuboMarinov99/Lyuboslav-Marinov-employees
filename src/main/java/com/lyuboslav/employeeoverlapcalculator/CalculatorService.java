@@ -6,10 +6,7 @@ import com.lyuboslav.employeeoverlapcalculator.model.Project;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CalculatorService {
 
@@ -25,9 +22,9 @@ public class CalculatorService {
 		return projects;
 	}
 
-	public List<Overlap> getLongestOverlapsForProject(Project project) {
+	public Optional<List<Overlap>> getLongestOverlapsForProject(Project project) {
 		if (project.getEmployees().size() < 2) {
-			return List.of();
+			return Optional.empty();
 		}
 
 		List<Overlap> overlaps = new ArrayList<>();
@@ -38,6 +35,9 @@ public class CalculatorService {
 			for (int j = i + 1; j < numberOfEmployees; j++) {
 				Employee employee1 = project.getEmployees().get(i);
 				Employee employee2 = project.getEmployees().get(j);
+				if (employee1.getEmployeeId() == employee2.getEmployeeId()) {
+					continue;
+				}
 				int overlapDays = calculatePairOverlap(employee1, employee2);
 				if (overlapDays > maxOverlapDays) {
 					overlaps.clear();
@@ -49,7 +49,7 @@ public class CalculatorService {
 			}
 		}
 
-		return overlaps;
+		return Optional.of(overlaps);
 	}
 
 	private int calculatePairOverlap(Employee employee1, Employee employee2) {
