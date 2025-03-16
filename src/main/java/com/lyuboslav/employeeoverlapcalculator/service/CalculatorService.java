@@ -13,9 +13,8 @@ public class CalculatorService {
 	/**
 	 * Calculates the overlaps between all employees in a project and returns the longest ones (if more than one
 	 * occurrence exists). If the project has less than two employees, an empty optional object is returned.
-	 * If no overlaps are found, an empty collection is returned instead. The method does not consider overlaps between the same
-	 * employee if he/she has been assigned to the project more than once.
-	 * ignored.
+	 * If no overlaps are found, an empty collection is returned instead. The method does not consider overlaps between
+	 * the same employee if he/she has been assigned to the project more than once.
 	 *
 	 * @param project - The project to calculate the overlaps for.
 	 * @return - An optional object representing the result of the calculation.
