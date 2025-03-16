@@ -10,6 +10,16 @@ import java.util.*;
 
 public class CalculatorService {
 
+	/**
+	 * Calculates the overlaps between all employees in a project and returns the longest ones (if more than one
+	 * occurrence exists). If the project has less than two employees, an empty optional object is returned.
+	 * If no overlaps are found, an empty collection is returned instead. The method does not consider overlaps between the same
+	 * employee if he/she has been assigned to the project more than once.
+	 * ignored.
+	 *
+	 * @param project - The project to calculate the overlaps for.
+	 * @return - An optional object representing the result of the calculation.
+	 */
 	public Optional<List<Overlap>> getLongestOverlapsForProject(Project project) {
 		if (project.getEmployees().size() < 2) {
 			return Optional.empty();
@@ -40,6 +50,15 @@ public class CalculatorService {
 		return Optional.of(overlaps);
 	}
 
+	/**
+	 * Returns an integer representing the number of days the two employees overlap. Regardless of the order of the
+	 * start/finish date of the pair, the latest start date and the earliest end date are used to calculate the overlap.
+	 * If the two employees do not overlap, the method returns 0. The result is inclusive of the start and end date.
+	 *
+	 * @param employee1 - The first employee.
+	 * @param employee2 - The second employee.
+	 * @return - An integer representing the number of days the two employees overlap.
+	 */
 	private int calculatePairOverlap(Employee employee1, Employee employee2) {
 		LocalDate maxStartDate = employee1.getDateFrom().isAfter(employee2.getDateFrom()) ? employee1.getDateFrom() : employee2.getDateFrom();
 		LocalDate minEndDate = employee1.getDateTo().isBefore(employee2.getDateTo()) ? employee1.getDateTo() : employee2.getDateTo();
