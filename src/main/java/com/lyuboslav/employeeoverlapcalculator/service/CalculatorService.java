@@ -37,7 +37,7 @@ public class CalculatorService {
 				}
 				int overlapDays = calculatePairOverlap(employee1, employee2);
 				if (overlapDays > maxOverlapDays) {
-					overlaps.clear();
+					overlaps = new ArrayList<>();
 					overlaps.add(new Overlap(employee1.getEmployeeId(), employee2.getEmployeeId(), overlapDays));
 					maxOverlapDays = overlapDays;
 				} else if (overlapDays == maxOverlapDays && overlapDays > 0) {

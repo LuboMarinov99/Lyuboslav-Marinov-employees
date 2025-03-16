@@ -1,8 +1,11 @@
 package com.lyuboslav.employeeoverlapcalculator.model;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Project {
 	private final int projectId;
 
@@ -12,14 +15,6 @@ public class Project {
 		this.projectId = projectId;
 		employees = new ArrayList<>();
 		employees.add(employee);
-	}
-
-	public int getProjectId() {
-		return projectId;
-	}
-
-	public List<Employee> getEmployees() {
-		return employees;
 	}
 
 	public void addEmployee(Employee employee) {

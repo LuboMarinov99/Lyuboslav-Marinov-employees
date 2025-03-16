@@ -1,9 +1,8 @@
-package com.lyuboslav.employeeoverlapcalculator;
+package com.lyuboslav.employeeoverlapcalculator.service;
 
 import com.lyuboslav.employeeoverlapcalculator.model.Employee;
 import com.lyuboslav.employeeoverlapcalculator.model.Overlap;
 import com.lyuboslav.employeeoverlapcalculator.model.Project;
-import com.lyuboslav.employeeoverlapcalculator.service.CalculatorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
