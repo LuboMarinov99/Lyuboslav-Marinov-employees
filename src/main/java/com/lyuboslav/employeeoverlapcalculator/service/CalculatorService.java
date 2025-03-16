@@ -1,4 +1,4 @@
-package com.lyuboslav.employeeoverlapcalculator;
+package com.lyuboslav.employeeoverlapcalculator.service;
 
 import com.lyuboslav.employeeoverlapcalculator.model.Employee;
 import com.lyuboslav.employeeoverlapcalculator.model.Overlap;
@@ -9,18 +9,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class CalculatorService {
-
-	public Map<Integer, Project> getProjects(List<Employee> employees) {
-		Map<Integer, Project> projects = new HashMap<>();
-		employees.forEach(employee -> {
-			if (projects.containsKey(employee.getProjectId())) {
-				projects.get(employee.getProjectId()).addEmployee(employee);
-			} else {
-				projects.put(employee.getProjectId(), new Project(employee.getProjectId(), employee));
-			}
-		});
-		return projects;
-	}
 
 	public Optional<List<Overlap>> getLongestOverlapsForProject(Project project) {
 		if (project.getEmployees().size() < 2) {
@@ -60,6 +48,6 @@ public class CalculatorService {
 			return 0;
 		}
 
-		return (int) ChronoUnit.DAYS.between(maxStartDate, minEndDate);
+		return (int) ChronoUnit.DAYS.between(maxStartDate, minEndDate) + 1;
 	}
 }

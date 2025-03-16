@@ -4,6 +4,8 @@ import com.lyuboslav.employeeoverlapcalculator.model.Employee;
 import com.lyuboslav.employeeoverlapcalculator.model.Overlap;
 import com.lyuboslav.employeeoverlapcalculator.model.Project;
 import com.lyuboslav.employeeoverlapcalculator.parse.ParseUtils;
+import com.lyuboslav.employeeoverlapcalculator.service.CalculatorService;
+import com.lyuboslav.employeeoverlapcalculator.service.ProjectService;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +13,10 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
+
 	private static final Scanner scanner = new Scanner(System.in);
-	private static final CalculatorService calculator = new CalculatorService();
+	private static final CalculatorService calculatorService = new CalculatorService();
+	private static final ProjectService projectService = new ProjectService();
 
 	public static void main(String[] args) {
 		boolean exit = false;
@@ -38,9 +42,9 @@ public class Main {
 
 	public static void runFlow(String fileName) {
 		List<Employee> employees = ParseUtils.parseCsv(fileName);
-		Map<Integer, Project> projects = calculator.getProjects(employees);
+		Map<Integer, Project> projects = projectService.getProjects(employees);
 		projects.values().forEach(project -> {
-			Optional<List<Overlap>> overlapsResult = calculator.getLongestOverlapsForProject(project);
+			Optional<List<Overlap>> overlapsResult = calculatorService.getLongestOverlapsForProject(project);
 
 			if (overlapsResult.isEmpty()) {
 				System.out.println("Overlap impossible. Less than 2 employees found in project ID: " + project.getProjectId());

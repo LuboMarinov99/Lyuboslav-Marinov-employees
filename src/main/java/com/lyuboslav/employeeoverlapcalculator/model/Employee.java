@@ -18,6 +18,16 @@ public class Employee {
 	@CsvCustomBindByPosition(position = 3, converter = LocalDateParser.class)
 	private LocalDate dateTo;
 
+	public Employee(int employeeId, int projectId, LocalDate dateFrom, LocalDate dateTo) {
+		this.employeeId = employeeId;
+		this.projectId = projectId;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
+	}
+
+	public Employee() {
+	}
+
 	public int getEmployeeId() {
 		return employeeId;
 	}
