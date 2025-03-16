@@ -1,10 +1,12 @@
 package com.lyuboslav.employeeoverlapcalculator;
 
 import com.lyuboslav.employeeoverlapcalculator.model.Employee;
+import com.lyuboslav.employeeoverlapcalculator.model.Overlap;
 import com.lyuboslav.employeeoverlapcalculator.model.Project;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,35 +25,31 @@ public class CalculatorService {
 		return projects;
 	}
 
-	public void calculateLongestOverlap(Project project) {
-		int employeeId1 = 0;
-		int employeeId2 = 0;
-		int maxOverlapDays = 0;
-
+	public List<Overlap> getLongestOverlapsForProject(Project project) {
 		if (project.getEmployees().size() < 2) {
-			System.out.println("Overlap not possible as there are less than 2 employees in the project");
-			return;
+			return List.of();
 		}
 
+		List<Overlap> overlaps = new ArrayList<>();
+		int maxOverlapDays = 0;
 		int numberOfEmployees = project.getEmployees().size();
+
 		for (int i = 0; i < numberOfEmployees; i++) {
 			for (int j = i + 1; j < numberOfEmployees; j++) {
 				Employee employee1 = project.getEmployees().get(i);
 				Employee employee2 = project.getEmployees().get(j);
 				int overlapDays = calculatePairOverlap(employee1, employee2);
-				if (overlapDays >= maxOverlapDays) {
-					employeeId1 = employee1.getEmployeeId();
-					employeeId2 = employee2.getEmployeeId();
+				if (overlapDays > maxOverlapDays) {
+					overlaps.clear();
+					overlaps.add(new Overlap(employee1.getEmployeeId(), employee2.getEmployeeId(), overlapDays));
 					maxOverlapDays = overlapDays;
+				} else if (overlapDays == maxOverlapDays && overlapDays > 0) {
+					overlaps.add(new Overlap(employee1.getEmployeeId(), employee2.getEmployeeId(), overlapDays));
 				}
 			}
 		}
 
-		if (maxOverlapDays > 0) {
-			System.out.println("The employees with the longest overlap in project " + project.getProjectId() + " are: " + employeeId1 + " and " + employeeId2 + " with " + maxOverlapDays + " days");
-		} else {
-			System.out.println("There is no overlap between any of the employees");
-		}
+		return overlaps;
 	}
 
 	private int calculatePairOverlap(Employee employee1, Employee employee2) {

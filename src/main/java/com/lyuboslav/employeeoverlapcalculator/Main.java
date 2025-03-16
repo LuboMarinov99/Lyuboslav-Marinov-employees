@@ -1,6 +1,7 @@
 package com.lyuboslav.employeeoverlapcalculator;
 
 import com.lyuboslav.employeeoverlapcalculator.model.Employee;
+import com.lyuboslav.employeeoverlapcalculator.model.Overlap;
 import com.lyuboslav.employeeoverlapcalculator.model.Project;
 import com.lyuboslav.employeeoverlapcalculator.parse.ParseUtils;
 
@@ -37,6 +38,14 @@ public class Main {
 	public static void runFlow(String fileName) {
 		List<Employee> employees = ParseUtils.parseCsv(fileName);
 		Map<Integer, Project> projects = calculator.getProjects(employees);
-		projects.values().forEach(calculator::calculateLongestOverlap);
+		projects.values().forEach(project -> {
+			List<Overlap> overlaps = calculator.getLongestOverlapsForProject(project);
+			if (!overlaps.isEmpty()) {
+				System.out.println("Project ID: " + project.getProjectId());
+				overlaps.forEach(System.out::println);
+			} else {
+				System.out.println("No overlaps found for project ID: " + project.getProjectId());
+			}
+		});
 	}
 }
